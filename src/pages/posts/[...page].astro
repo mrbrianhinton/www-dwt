@@ -1,0 +1,80 @@
+---
+import PageLayout from "@/layouts/Base";
+import BlogPostPreview from "@/components/BlogPostPreview";
+import Pagination from "@/components/Paginator";
+import { getAllTags, sortMDByDate } from "src/util";
+import type { Post, Page, MDXInstance } from "@/types";
+export async function getStaticPaths({ paginate }) {
+	const allPosts = await Astro.glob<Post>("./*.mdx");
+	const allPostsByDate = sortMDByDate(allPosts);
+	const allTags = getAllTags(allPosts);
+	return paginate(allPostsByDate, { props: { allTags }, pageSize: 10 });
+}
+export interface Props {
+	page: Page<MDXInstance<Post>>;
+	allTags: string[];
+}
+const { page, allTags } = Astro.props as Props;
+const meta = {
+	title: "Activity",
+	description: "A collection of activity",
+};
+const paginationProps = {
+	...(page.url.prev && {
+		prevUrl: {
+			url: page.url.prev,
+			text: `Previous Posts`,
+		},
+	}),
+	...(page.url.next && {
+		nextUrl: {
+			url: page.url.next,
+			text: `Next Posts`,
+		},
+	}),
+};
+---
+
+<PageLayout meta={meta}>
+	<h1>Activity</h1>
+	<div>
+		<section aria-label="Activity list">
+			<ul>
+				{
+					page.data.map((p) => (
+						<li>
+							<BlogPostPreview post={p} as="h2" withDesc />
+						</li>
+					))
+				}
+			</ul>
+			<Pagination {...paginationProps} />
+		</section>
+		{
+			allTags.length && (
+				<aside>
+					<h2>
+						Tags
+					</h2>
+					<ul>
+						{allTags.map((tag) => (
+							<li>
+								<a
+									href={`/tags/${tag}`}
+									aria-label={`View all activity with the tag: ${tag}`}
+								>
+									{tag}
+								</a>
+							</li>
+						))}
+					</ul>
+					<span>
+						<a href="/tags" aria-label="View all activity categories">
+							View all
+						</a>
+					</span>
+				</aside>
+			)
+		}
+	</div>
+</PageLayout>

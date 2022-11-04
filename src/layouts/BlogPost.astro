@@ -1,0 +1,83 @@
+---
+import BaseLayout from "./Base.astro";
+import { getLocaleTime, getPreviousAndNextPosts, sortMDByDate } from "src/util";
+import Paginator from "@/components/Paginator";
+import type { Post } from "@/types";
+const {
+	content: { title, summary, publishDate, tags },
+	headings,
+} = Astro.props;
+const date = new Date(publishDate);
+const datetime = date.toISOString();
+const postDate = getLocaleTime(date);
+const currentPage = new URL(Astro.request.url).pathname;
+const allPosts = await Astro.glob<Post>("../pages/posts/*.mdx");
+const allSortedPosts = sortMDByDate(allPosts);
+const { prev, next } = getPreviousAndNextPosts(currentPage, allSortedPosts);
+const paginationProps = {
+	...(prev && {
+		prevUrl: {
+			url: prev.url,
+			text: `${prev.frontmatter.title}`,
+			srLabel: " Previous Article:",
+		},
+	}),
+	...(next && {
+		nextUrl: {
+			url: next.url,
+			text: `${next.frontmatter.title}`,
+			srLabel: "Next Article:",
+		},
+	}),
+};
+---
+
+<BaseLayout meta={{ title, summary }}>
+	<div>
+		<article>
+			<h1>{title}</h1>
+			<span>
+				<time {datetime}>{postDate}</time>
+				{
+					tags?.length && (
+						<div>
+							<ul>
+								{tags.map((tag) => (
+									<li>
+										<a
+											aria-label={`View more activity with the tag ${tag}`}
+											href={`/tags/${tag}`}
+										>
+											{tag}
+										</a>
+									</li>
+								))}
+							</ul>
+						</div>
+					)
+				}
+			</span>
+			<p>{summary}</p>
+			<div>
+				<slot />
+			</div>
+		</article>
+		<aside>
+			<h2>Table of Contents</h2>
+			<ul>
+				{
+					headings.map(({ slug, text }) => (
+						<li class="line-clamp-2 hover:text-accent">
+							<a href={`#${slug}`} aria-label={`Scroll to section: ${text}`}>
+								<span>&#35;</span> {text}
+							</a>
+						</li>
+					))
+				}
+			</ul>
+		</aside>
+	</div>
+	<div>
+		<Paginator {...paginationProps} />
+	</div>
+</BaseLayout>

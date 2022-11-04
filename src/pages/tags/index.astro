@@ -1,0 +1,29 @@
+---
+import PageLayout from "@/layouts/Base";
+import { getAllTagsWithCount } from "@/util";
+import type { Post } from "@/types";
+const allPosts = await Astro.glob<Post>("../posts/*.mdx");
+const allTags = getAllTagsWithCount(allPosts);
+const meta = {
+	title: "All Tags",
+	description: "All Tags from my activity",
+};
+---
+
+<PageLayout meta={meta}>
+	<h1>Tags</h1>
+	<ul>
+		{
+			Object.keys(allTags).map((tag) => (
+				<li>
+					<a href={`/tags/${tag}`} title={`View posts with the tag: ${tag}`}>
+						{tag}
+					</a>
+					<span>
+						- {allTags[tag]} Post{allTags[tag] > 1 && "s"}
+					</span>
+				</li>
+			))
+		}
+	</ul>
+</PageLayout>
