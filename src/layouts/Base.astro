@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SkipLink from "@/components/SkipLink";
 import siteMeta from "src/site-meta.config";
+import Promoted from "@/components/Promoted";
 export type Props = {
 	meta: SiteMeta;
 };
@@ -40,8 +41,9 @@ const {
 	<body>
 		<SkipLink />
 		<Header />
-		<main id="main">
+		<main class="content" id="main">
 			<slot />
+			<Promoted />
 		</main>
 		<Footer />
 	</body>

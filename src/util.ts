@@ -61,3 +61,7 @@ export function getLocaleTime(
 	};
 	return new Intl.DateTimeFormat(locale, formatOptions).format(date);
 }
+
+export function randIndex (data) {
+	return Math.floor(Math.random() * data.length);
+}

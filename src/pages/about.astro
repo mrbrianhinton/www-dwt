@@ -1,10 +1,15 @@
 ---
 import PageLayout from "@/layouts/Base";
-import { Image } from "@astrojs/image/components";
+import { sortMDByDate } from "@/util";
+import type { Post } from "@/types";
+import PostPreview from "@/components/PostPreview";
 const meta = {
 	title: "About",
 	description: "Designer",
 };
+const MAX_POSTS = 1;
+const allPosts = await Astro.glob<Post>("./posts/*.mdx");
+const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 ---
 
 <PageLayout meta={meta}>
@@ -15,4 +20,17 @@ const meta = {
 			working with clients of all sizes, spanning many industries.
 		</p>
 	</div>
+	<section aria-label="recent activity">
+		<h2>Recent Activity</h2>
+		<p>Thanks for dropping by.</p>
+		<ul>
+			{
+				allPostsByDate.map((p) => (
+					<li>
+						<PostPreview post={p} as="h2" />
+					</li>
+				))
+			}
+		</ul>
+	</section>
 </PageLayout>

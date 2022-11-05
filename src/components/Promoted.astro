@@ -1,0 +1,14 @@
+---
+import type { IElement, MDXInstance, Promo } from "@/types";
+import data from '../../data/promoted.json';
+import { randIndex } from "src/util";
+const key = Object.keys(data.promoted);
+const randKey = randIndex(key);
+
+const promo = data.promoted[randKey];
+
+---
+
+<div>
+    {promo.title}
+</div>

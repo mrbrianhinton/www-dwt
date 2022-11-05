@@ -1,0 +1,13 @@
+{ "promoted": [
+    {
+      "title": "Figma",
+      "summary" : "Figma is a design tool.",
+      "url": "http://figma.com"
+    },
+    {
+      "title": "Dave Rupert",
+      "summary" : "His blog is just enjoyable to read.",
+      "url": "http://daverupert.com"
+    }
+  ]
+}
