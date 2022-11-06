@@ -1,5 +1,5 @@
 ---
-import type { IElement, MDXInstance, Promo } from "@/types";
+import type { Promo } from "@/types";
 import data from '../../data/promoted.json';
 import { randIndex } from "src/util";
 const key = Object.keys(data.promoted);
@@ -10,6 +10,7 @@ const promo = data.promoted[randKey];
 ---
 
 <div>
-    {promo.title}
-    {promo.summary}
+    <p>{promo.title}</p>
+    <p>{promo.summary}</p>
+    <a href="{promo.url}">Find out more</a>
 </div>

@@ -39,13 +39,15 @@ const {
 		</script>
 	</head>
 	<body>
-		<SkipLink />
-		<Header />
-		<main class="content" id="main">
-			<slot />
-			<Promoted />
-		</main>
-		<Footer />
+		<div class="container">
+			<SkipLink />
+			<main class="content" id="main">
+				<Header />
+				<slot />
+				<Promoted />
+				<Footer />
+			</main>
+		</div>
 	</body>
 </html>
 
