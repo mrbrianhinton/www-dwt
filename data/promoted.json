@@ -8,6 +8,21 @@
       "title": "Dave Rupert",
       "summary" : "His blog is just enjoyable to read.",
       "url": "http://daverupert.com"
+    },
+    {
+      "title": "MacBook Air",
+      "summary" : "A great computer",
+      "url": "http://daverupert.com"
+    },
+    {
+      "title": "The House of Dragon",
+      "summary" : "Dragons are fiery.",
+      "url": "http://google.com"
+    },
+    {
+      "title": "David Bowie",
+      "summary" : "Music good.",
+      "url": "http://daverupert.com"
     }
   ]
 }
