@@ -1,6 +1,6 @@
 ---
 import PageLayout from "@/layouts/Base";
-import BlogPostPreview from "@/components/BlogPostPreview";
+import BlogPostPreview from "@/components/PostPreview";
 import Pagination from "@/components/Paginator";
 import { getAllTags, sortMDByDate } from "src/util";
 import type { Post, Page, MDXInstance } from "@/types";
@@ -43,7 +43,7 @@ const paginationProps = {
 				{
 					page.data.map((p) => (
 						<li>
-							<BlogPostPreview post={p} as="h2" withDesc />
+							<PostPreview post={p} as="h2" withDesc />
 						</li>
 					))
 				}
