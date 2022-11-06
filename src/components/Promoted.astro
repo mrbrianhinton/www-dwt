@@ -9,8 +9,14 @@ const promo = data.promoted[randKey];
 
 ---
 
-<div>
+<div class="promo">
     <p>{promo.title}</p>
     <p>{promo.summary}</p>
-    <a href="{promo.url}">Find out more</a>
+    <a href={promo.url}>Find out more</a>
 </div>
+
+<style>
+    .promo {
+        background-color: var(--color-lessdarkteal);
+    }
+</style>
