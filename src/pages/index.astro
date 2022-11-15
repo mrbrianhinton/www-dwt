@@ -1,0 +1,39 @@
+---
+import PageLayout from "@/layouts/Base";
+import PostPreview from "@/components/PostPreview";
+import SocialList from "@/components/SocialList";
+import { sortMDByDate } from "@/util";
+import type { Post } from "@/types";
+import Promoted from "@/components/Promoted";
+const meta = {
+	title: "Design with Thought",
+	description: "",
+};
+const MAX_POSTS = 10;
+const allPosts = await Astro.glob<Post>("./posts/*.mdx");
+const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
+---
+
+<PageLayout meta={meta}>
+	<section>
+		<h1>Design with Thought</h1>
+		<p>
+			Brian Hinton is a Product Designer, Accessibility-Centered Front-End
+			Developer, and Team Manager—he crafts experiences that are inclusive.
+		</p>
+		<Promoted />
+		<SocialList />
+	</section>
+	<section aria-label="recent activity">
+		<h2>Recent Activity</h2>
+		<ul>
+			{
+				allPostsByDate.map((p) => (
+					<li>
+						<PostPreview post={p} as="h2" />
+					</li>
+				))
+			}
+		</ul>
+	</section>
+</PageLayout>

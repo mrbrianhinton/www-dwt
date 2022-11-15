@@ -1,0 +1,22 @@
+---
+import type { Promo } from "@/types";
+import data from '../../data/promoted.json';
+import { randIndex } from "src/util";
+const key = Object.keys(data.promoted);
+const randKey = randIndex(key);
+
+const promo = data.promoted[randKey];
+
+---
+
+<div class="promo">
+    <p>{promo.title}</p>
+    <p>{promo.summary}</p>
+    <a href={promo.url}>Find out more</a>
+</div>
+
+<style>
+    .promo {
+        background-color: var(--color-lessdarkteal);
+    }
+</style>
